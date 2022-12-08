@@ -1,9 +1,34 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 function InputWord({ setAnswer }) {
+  const [inputWord, setInputword] = useState("");
+  const navigate = useNavigate();
+  const enter = (e) => {
+    e.preventDefault();
+    setAnswer(inputWord);
+    setInputword("");
+    navigate("/game");
+  };
+  const answerInput = (e) => {
+    setInputword(e.target.value.toLowerCase());
+  };
   return (
     <>
-      <div>
+      <div className="inputWord" onSubmit={enter}>
         <form>
-          <input type="text" label="answer" name="answer" />
+          <label>
+            To Start Game Input a Word
+            <input
+              className="inputWordField"
+              type="password"
+              label="answer"
+              name="answer"
+              required
+              onChange={answerInput}
+            />
+          </label>
+          <input type="submit" value="Enter" />
         </form>
       </div>
     </>
