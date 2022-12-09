@@ -41,7 +41,8 @@ function Game({ answer, setAnswer }) {
 
   const guess = (e) => {
     e.preventDefault();
-    const formValid = /[a-z]{1}/.test(guessLetter);
+    const formValid =
+      /[a-z]{1}/.test(guessLetter) && !guesses.includes(guessLetter);
     if (!formValid) {
       return;
     }
