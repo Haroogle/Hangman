@@ -28,7 +28,7 @@ function InputWord({ setAnswer }) {
               onChange={answerInput}
             />
           </label>
-          <input type="submit" value="Enter" />
+          <input className="submitButton" type="submit" value="Enter" />
         </form>
       </div>
     </>

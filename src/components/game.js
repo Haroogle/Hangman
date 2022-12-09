@@ -1,25 +1,31 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Figure from "./figure";
 function Game({ answer, setAnswer }) {
   const [guesses, setGuesses] = useState([]);
   const [guessLetter, setGuessLetter] = useState("");
+
   const navigate = useNavigate();
+
   const guessesLeft = useMemo(() => {
     return (
-      8 -
+      7 -
       guesses.filter((g) => {
         return !answer.includes(g);
       }).length
     );
   }, [answer, guesses]);
+
   const lettersToShow = useMemo(() => {
     return answer.split("").map((a) => {
       if (guesses.includes(a)) {
         return a;
       }
+
       return "_";
     });
   }, [answer, guesses]);
+
   const isWin = useMemo(() => {
     const includedLetters = guesses.filter((g) => {
       return answer.includes(g);
@@ -28,6 +34,7 @@ function Game({ answer, setAnswer }) {
       return includedLetters.includes(a);
     });
   }, [answer, guesses]);
+
   const guess = (e) => {
     e.preventDefault();
     const formValid = /[a-z]{1}/.test(guessLetter);
@@ -46,9 +53,9 @@ function Game({ answer, setAnswer }) {
   };
   if (isWin) {
     return (
-      <div className="App">
+      <div className="endScreenWin">
         {" "}
-        You win
+        You win!
         <button type="button" onClick={reset}>
           Reset
         </button>
@@ -57,29 +64,33 @@ function Game({ answer, setAnswer }) {
   } else {
     if (guessesLeft > 0) {
       return (
-        <div>
-          <p>guesses left: {guessesLeft}</p>
-          <form onSubmit={guess}>
+        <div className="game-container">
+          <p>Guesses left: {guessesLeft}</p>
+
+          <form className="guessForm" onSubmit={guess}>
             <div>
-              <label>guess</label>
+              <label className="guessLabel">Guess</label>
               <input
                 value={guessLetter}
                 onChange={(e) => setGuessLetter(e.target.value)}
               />
             </div>
-            <button type="submit">guess</button>
+            <button type="submit">Guess</button>
           </form>
-          {lettersToShow.map((l, i) => {
-            return <span>{l}</span>;
-          })}
+          <div>
+            {lettersToShow.map((l, i) => {
+              return <span>{l}</span>;
+            })}
+          </div>
+          <Figure guessesLeft={guessesLeft} />
         </div>
       );
     } else {
       return (
-        <div>
-          WordSetter Wins.The word was {answer.toUpperCase()}
+        <div className="endScreenLose">
+          WordSetter Wins! The word was {answer.toUpperCase()}
           <button type="button" onClick={reset}>
-            reset
+            Reset
           </button>
         </div>
       );
