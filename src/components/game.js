@@ -71,6 +71,7 @@ function Game({ answer, setAnswer }) {
             <div>
               <label className="guessLabel">Guess</label>
               <input
+                maxLength={1}
                 value={guessLetter}
                 onChange={(e) => setGuessLetter(e.target.value)}
               />
