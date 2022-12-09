@@ -79,7 +79,7 @@ function Game({ answer, setAnswer }) {
           </form>
           <div>
             {lettersToShow.map((l, i) => {
-              return <span>{l}</span>;
+              return <span className="letterDisplay">{l}</span>;
             })}
           </div>
           <Figure guessesLeft={guessesLeft} />
