@@ -35,6 +35,10 @@ function Game({ answer, setAnswer }) {
     });
   }, [answer, guesses]);
 
+  const wrongLetters = guesses.filter((g) => {
+    return !answer.includes(g);
+  });
+
   const guess = (e) => {
     e.preventDefault();
     const formValid = /[a-z]{1}/.test(guessLetter);
@@ -66,6 +70,17 @@ function Game({ answer, setAnswer }) {
       return (
         <div className="game-container">
           <p>Guesses left: {guessesLeft}</p>
+          <p>
+            Wrong Letters :{" "}
+            {wrongLetters.map((l, i) => {
+              return (
+                <span className="letterDisplay">
+                  {l}
+                  {","}
+                </span>
+              );
+            })}
+          </p>
 
           <form className="guessForm" onSubmit={guess}>
             <div>
